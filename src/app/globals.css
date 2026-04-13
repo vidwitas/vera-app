@@ -12,12 +12,12 @@
 }
 
 html {
-  background-color: #FDF9F0;
+  background-color: #F8F2E5;
 }
 
 body {
-  color: #1A1410;
-  background-color: #FDF9F0;
+  color: #1C1410;
+  background-color: #F8F2E5;
   font-family: var(--font-dm-sans);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -54,18 +54,18 @@ body {
   }
 
   .gradient-brand {
-    background: linear-gradient(135deg, #E05020 0%, #F5A623 100%);
+    background: linear-gradient(135deg, #C8411B 0%, #C08010 100%);
   }
 
   .gradient-brand-text {
-    background: linear-gradient(135deg, #E05020 0%, #F5A623 100%);
+    background: linear-gradient(135deg, #C8411B 0%, #C08010 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
   }
 
   .gradient-ocean {
-    background: linear-gradient(135deg, #1A9E87 0%, #36ADDB 100%);
+    background: linear-gradient(135deg, #0E7A64 0%, #1E90C8 100%);
   }
 }
 
@@ -77,6 +77,6 @@ body {
   background: transparent;
 }
 ::-webkit-scrollbar-thumb {
-  background: #E8E0D0;
+  background: #DED0B4;
   border-radius: 2px;
 }

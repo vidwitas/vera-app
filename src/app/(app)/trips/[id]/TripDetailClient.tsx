@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import type { Trip, Profile } from "@/types/database";
+import type { Trip, Profile, TravelStyle } from "@/types/database";
 import { formatDateRange, tripDuration, cn } from "@/lib/utils";
 import { TRAVEL_STYLES, BUDGET_TIERS } from "@/lib/constants";
 import { createClient } from "@/lib/supabase/client";
@@ -18,10 +18,24 @@ interface Props {
 }
 
 const BUDGET_BADGE: Record<string, { bg: string; text: string }> = {
-  budget: { bg: "bg-sage/15", text: "text-sage" },
-  mid: { bg: "bg-rust/15", text: "text-rust" },
-  luxury: { bg: "bg-amber-100", text: "text-amber-700" },
-  ultra: { bg: "bg-purple-100", text: "text-purple-700" },
+  budget: { bg: "bg-sage/15", text: "text-sage-dark" },
+  mid: { bg: "bg-rust/12", text: "text-rust-dark" },
+  luxury: { bg: "bg-gold-light", text: "text-gold-dark" },
+  ultra: { bg: "bg-sky-light", text: "text-sky-dark" },
+};
+
+const STYLE_COLORS: Record<TravelStyle, { bg: string; text: string }> = {
+  adventure: { bg: "bg-rust/10", text: "text-rust-dark" },
+  culture:   { bg: "bg-purple-100", text: "text-purple-700" },
+  food:      { bg: "bg-gold-light", text: "text-gold-dark" },
+  nature:    { bg: "bg-sage/15", text: "text-sage-dark" },
+  nightlife: { bg: "bg-indigo-100", text: "text-indigo-700" },
+  wellness:  { bg: "bg-teal-100", text: "text-teal-700" },
+  art:       { bg: "bg-pink-100", text: "text-pink-700" },
+  history:   { bg: "bg-amber-100", text: "text-amber-800" },
+  beach:     { bg: "bg-sky-light", text: "text-sky-dark" },
+  city:      { bg: "bg-slate-100", text: "text-slate-600" },
+  remote:    { bg: "bg-emerald-100", text: "text-emerald-700" },
 };
 
 export default function TripDetailClient({
@@ -58,7 +72,6 @@ export default function TripDetailClient({
         trip_id: trip.id,
         user_id: currentUserId,
       });
-      // Fetch the current user's profile to add to list
       const { data: profile } = await supabase
         .from("profiles")
         .select("*")
@@ -78,7 +91,7 @@ export default function TripDetailClient({
         <div className="flex items-center gap-3 px-4 py-4 pt-12">
           <button
             onClick={() => router.back()}
-            className="w-9 h-9 rounded-full bg-sand flex items-center justify-center hover:bg-sand-dark transition-colors"
+            className="w-9 h-9 rounded-full bg-sand flex items-center justify-center hover:bg-sand-dark transition-colors border border-sand-dark"
           >
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
               <path d="M19 12H5M12 19l-7-7 7-7" />
@@ -92,67 +105,77 @@ export default function TripDetailClient({
 
       <div className="px-4 py-6 flex flex-col gap-6">
         {/* Hero card */}
-        <div className="bg-sand rounded-3xl p-5 border border-sand-dark">
-          <div className="flex items-start justify-between gap-3 mb-4">
-            <div>
-              <h2 className="font-display text-2xl font-semibold text-ink leading-tight">
-                {trip.destination}
-              </h2>
-              <p className="text-sm text-muted font-body mt-1">
-                {formatDateRange(trip.start_date, trip.end_date)}
-                <span className="mx-1.5">·</span>
-                {duration} {duration === 1 ? "day" : "days"}
-              </p>
-            </div>
-            <span className={cn("text-xs font-body font-medium px-2.5 py-1 rounded-full flex-shrink-0", badge.bg, badge.text)}>
-              {budget?.label}
-            </span>
-          </div>
-
-          {/* Stats row */}
-          <div className="grid grid-cols-3 gap-3 mb-4">
-            <div className="bg-cream rounded-2xl p-3 text-center">
-              <p className="text-xs text-muted font-body">Travelers</p>
-              <p className="font-display text-xl font-semibold text-ink mt-0.5">
-                {travelerList.length}
-                <span className="text-sm text-muted font-body font-normal">
-                  /{trip.group_size}
-                </span>
-              </p>
-            </div>
-            <div className="bg-cream rounded-2xl p-3 text-center">
-              <p className="text-xs text-muted font-body">Duration</p>
-              <p className="font-display text-xl font-semibold text-ink mt-0.5">
-                {duration}
-                <span className="text-sm text-muted font-body font-normal"> days</span>
-              </p>
-            </div>
-            <div className="bg-cream rounded-2xl p-3 text-center">
-              <p className="text-xs text-muted font-body">Budget</p>
-              <p className={cn("font-display text-sm font-semibold mt-0.5", badge.text)}>
+        <div className="bg-sand rounded-3xl border border-sand-dark overflow-hidden">
+          <div className="h-1.5 gradient-brand" />
+          <div className="p-5">
+            <div className="flex items-start justify-between gap-3 mb-4">
+              <div>
+                <h2 className="font-display text-2xl font-semibold text-ink leading-tight">
+                  {trip.destination}
+                </h2>
+                <p className="text-sm text-muted font-body mt-1">
+                  {formatDateRange(trip.start_date, trip.end_date)}
+                  <span className="mx-1.5">·</span>
+                  {duration} {duration === 1 ? "day" : "days"}
+                </p>
+              </div>
+              <span className={cn("text-xs font-body font-semibold px-2.5 py-1 rounded-full flex-shrink-0", badge.bg, badge.text)}>
                 {budget?.label}
-              </p>
+              </span>
             </div>
-          </div>
 
-          {/* Travel styles */}
-          {styleItems.length > 0 && (
-            <div className="flex flex-wrap gap-1.5">
-              {styleItems.map((style) => (
-                <span
-                  key={style.value}
-                  className="inline-flex items-center gap-1 text-xs px-2.5 py-1 rounded-full bg-cream border border-sand-dark text-muted font-body"
-                >
-                  {style.emoji} {style.label}
-                </span>
-              ))}
+            {/* Stats row */}
+            <div className="grid grid-cols-3 gap-3 mb-4">
+              <div className="bg-cream rounded-2xl p-3 text-center border border-sand-dark">
+                <p className="text-xs text-muted font-body">Travelers</p>
+                <p className="font-display text-xl font-semibold text-ink mt-0.5">
+                  {travelerList.length}
+                  <span className="text-sm text-muted font-body font-normal">
+                    /{trip.group_size}
+                  </span>
+                </p>
+              </div>
+              <div className="bg-cream rounded-2xl p-3 text-center border border-sand-dark">
+                <p className="text-xs text-muted font-body">Duration</p>
+                <p className="font-display text-xl font-semibold text-ink mt-0.5">
+                  {duration}
+                  <span className="text-sm text-muted font-body font-normal"> days</span>
+                </p>
+              </div>
+              <div className="bg-cream rounded-2xl p-3 text-center border border-sand-dark">
+                <p className="text-xs text-muted font-body">Budget</p>
+                <p className={cn("font-display text-sm font-semibold mt-0.5", badge.text)}>
+                  {budget?.label}
+                </p>
+              </div>
             </div>
-          )}
+
+            {/* Travel styles */}
+            {styleItems.length > 0 && (
+              <div className="flex flex-wrap gap-1.5">
+                {styleItems.map((style) => {
+                  const colors = STYLE_COLORS[style.value];
+                  return (
+                    <span
+                      key={style.value}
+                      className={cn(
+                        "inline-flex items-center gap-1 text-xs px-2.5 py-1 rounded-full font-body font-medium",
+                        colors.bg,
+                        colors.text
+                      )}
+                    >
+                      {style.emoji} {style.label}
+                    </span>
+                  );
+                })}
+              </div>
+            )}
+          </div>
         </div>
 
         {/* Description */}
         {trip.description && (
-          <div>
+          <div className="bg-sand rounded-2xl p-4 border border-sand-dark">
             <h3 className="font-display text-base font-semibold text-ink mb-2">
               About this trip
             </h3>
@@ -163,11 +186,11 @@ export default function TripDetailClient({
         )}
 
         {/* Posted by */}
-        <div>
-          <h3 className="font-display text-base font-semibold text-ink mb-3">
-            Posted by
-          </h3>
-          {trip.profile && (
+        {trip.profile && (
+          <div>
+            <h3 className="font-display text-base font-semibold text-ink mb-3">
+              Posted by
+            </h3>
             <div className="flex items-center gap-3 bg-sand rounded-2xl p-4 border border-sand-dark">
               <Avatar name={trip.profile.full_name} size="lg" />
               <div className="flex-1 min-w-0">
@@ -176,7 +199,7 @@ export default function TripDetailClient({
                     {trip.profile.full_name}
                   </p>
                   {trip.profile.email_verified && (
-                    <span className="inline-flex items-center gap-0.5 text-xs text-sage bg-sage/10 px-1.5 py-0.5 rounded-full">
+                    <span className="inline-flex items-center gap-0.5 text-xs text-sage bg-sage/10 px-1.5 py-0.5 rounded-full font-medium">
                       <svg width="10" height="10" viewBox="0 0 24 24" fill="currentColor">
                         <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
                       </svg>
@@ -191,8 +214,8 @@ export default function TripDetailClient({
                 )}
               </div>
             </div>
-          )}
-        </div>
+          </div>
+        )}
 
         {/* Travelers going */}
         {travelerList.length > 0 && (
@@ -216,7 +239,7 @@ export default function TripDetailClient({
                     )}
                   </div>
                   {traveler.id === currentUserId && (
-                    <span className="ml-auto text-xs text-rust bg-rust/10 px-2 py-0.5 rounded-full font-body">
+                    <span className="ml-auto text-xs text-rust-dark bg-rust/10 px-2 py-0.5 rounded-full font-body font-medium">
                       You
                     </span>
                   )}
@@ -236,7 +259,11 @@ export default function TripDetailClient({
             fullWidth
             size="lg"
             variant={interested ? "secondary" : "primary"}
-            className={interested ? "border-rust/30 text-rust" : ""}
+            className={cn(
+              interested
+                ? "border-rust/30 text-rust-dark"
+                : "gradient-brand border-0 shadow-lg"
+            )}
           >
             {interested ? (
               <>

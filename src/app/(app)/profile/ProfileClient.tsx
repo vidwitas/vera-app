@@ -244,7 +244,7 @@ function ProfileTripRow({ trip }: { trip: Trip }) {
             height="16"
             viewBox="0 0 24 24"
             fill="none"
-            stroke="#E05020"
+            stroke="#C8411B"
             strokeWidth="2"
             strokeLinecap="round"
             strokeLinejoin="round"

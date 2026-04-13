@@ -130,8 +130,8 @@ export default function FeedClient({ initialTrips }: FeedClientProps) {
       <main className="flex-1 px-4 py-4">
         {filtered.length === 0 ? (
           <div className="flex flex-col items-center justify-center py-20 text-center">
-            <div className="w-16 h-16 rounded-full bg-sand flex items-center justify-center mb-4">
-              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#8A7968" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+            <div className="w-16 h-16 rounded-full bg-sand border border-sand-dark flex items-center justify-center mb-4 text-muted">
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
                 <circle cx="12" cy="12" r="10" />
                 <path d="M8 15s1.5-2 4-2 4 2 4 2" />
                 <line x1="9" x2="9.01" y1="9" y2="9" />

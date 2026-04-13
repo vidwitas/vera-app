@@ -3,6 +3,8 @@
 import Link from "next/link";
 import Avatar from "@/components/ui/Avatar";
 import { TRAVEL_STYLES } from "@/lib/constants";
+import { cn } from "@/lib/utils";
+import type { TravelStyle } from "@/types/database";
 
 interface Match {
   profile: {
@@ -28,13 +30,27 @@ interface Props {
   hasTrips: boolean;
 }
 
+const STYLE_COLORS: Record<TravelStyle, { bg: string; text: string }> = {
+  adventure: { bg: "bg-rust/10", text: "text-rust-dark" },
+  culture:   { bg: "bg-purple-100", text: "text-purple-700" },
+  food:      { bg: "bg-gold-light", text: "text-gold-dark" },
+  nature:    { bg: "bg-sage/15", text: "text-sage-dark" },
+  nightlife: { bg: "bg-indigo-100", text: "text-indigo-700" },
+  wellness:  { bg: "bg-teal-100", text: "text-teal-700" },
+  art:       { bg: "bg-pink-100", text: "text-pink-700" },
+  history:   { bg: "bg-amber-100", text: "text-amber-800" },
+  beach:     { bg: "bg-sky-light", text: "text-sky-dark" },
+  city:      { bg: "bg-slate-100", text: "text-slate-600" },
+  remote:    { bg: "bg-emerald-100", text: "text-emerald-700" },
+};
+
 export default function MatchesClient({ matches, hasTrips }: Props) {
   return (
     <div className="min-h-dvh">
       {/* Header */}
       <div className="sticky top-0 z-40 bg-cream/95 backdrop-blur-sm border-b border-sand-dark">
         <div className="px-4 pt-12 pb-4">
-          <h1 className="font-display text-2xl font-semibold text-ink">
+          <h1 className="font-display text-2xl font-semibold gradient-brand-text">
             Your matches
           </h1>
           <p className="text-sm text-muted font-body mt-1">
@@ -46,8 +62,8 @@ export default function MatchesClient({ matches, hasTrips }: Props) {
       <div className="px-4 py-4 pb-28">
         {!hasTrips ? (
           <div className="flex flex-col items-center justify-center py-20 text-center">
-            <div className="w-16 h-16 rounded-full bg-sand flex items-center justify-center mb-4">
-              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#8A7968" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+            <div className="w-16 h-16 rounded-full gradient-brand flex items-center justify-center mb-4 text-cream">
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
                 <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
                 <circle cx="9" cy="7" r="4" />
                 <path d="M23 21v-2a4 4 0 0 0-3-3.87" />
@@ -60,15 +76,15 @@ export default function MatchesClient({ matches, hasTrips }: Props) {
             </p>
             <Link
               href="/trips/new"
-              className="inline-flex items-center gap-2 bg-rust text-cream text-sm font-body font-medium px-5 py-2.5 rounded-2xl hover:bg-rust-dark transition-colors"
+              className="inline-flex items-center gap-2 gradient-brand text-cream text-sm font-body font-semibold px-5 py-2.5 rounded-2xl hover:opacity-90 transition-opacity"
             >
               Post a trip
             </Link>
           </div>
         ) : matches.length === 0 ? (
           <div className="flex flex-col items-center justify-center py-20 text-center">
-            <div className="w-16 h-16 rounded-full bg-sand flex items-center justify-center mb-4">
-              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#8A7968" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+            <div className="w-16 h-16 rounded-full bg-sand border border-sand-dark flex items-center justify-center mb-4 text-muted">
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
                 <circle cx="12" cy="12" r="10" />
                 <path d="M8 15s1.5-2 4-2 4 2 4 2" />
                 <line x1="9" x2="9.01" y1="9" y2="9" />
@@ -100,93 +116,102 @@ function MatchCard({ match }: { match: Match }) {
   );
 
   return (
-    <div className="bg-sand rounded-3xl p-5 border border-sand-dark">
-      <div className="flex items-start gap-3 mb-4">
-        <Avatar name={profile.full_name} size="lg" />
-        <div className="flex-1 min-w-0">
-          <div className="flex items-center gap-2 flex-wrap">
-            <h3 className="font-body font-semibold text-ink">
-              {profile.full_name ?? "INSEAD member"}
-            </h3>
-            {profile.email_verified && (
-              <span className="inline-flex items-center gap-0.5 text-xs text-sage bg-sage/10 px-1.5 py-0.5 rounded-full">
-                <svg width="10" height="10" viewBox="0 0 24 24" fill="currentColor">
-                  <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-                </svg>
-                INSEAD
+    <div className="bg-sand rounded-3xl border border-sand-dark overflow-hidden">
+      <div className="h-1 gradient-brand" />
+      <div className="p-5">
+        <div className="flex items-start gap-3 mb-4">
+          <Avatar name={profile.full_name} size="lg" />
+          <div className="flex-1 min-w-0">
+            <div className="flex items-center gap-2 flex-wrap">
+              <h3 className="font-body font-semibold text-ink">
+                {profile.full_name ?? "INSEAD member"}
+              </h3>
+              {profile.email_verified && (
+                <span className="inline-flex items-center gap-0.5 text-xs text-sage bg-sage/10 px-1.5 py-0.5 rounded-full font-medium">
+                  <svg width="10" height="10" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                  </svg>
+                  INSEAD
+                </span>
+              )}
+            </div>
+            {profile.cohort && (
+              <p className="text-xs text-muted font-body mt-0.5">{profile.cohort}</p>
+            )}
+            <div className="flex items-center gap-1 mt-1.5">
+              <span className="inline-flex items-center gap-1 text-xs font-body font-semibold gradient-brand-text">
+                ✦ {score} match point{score !== 1 ? "s" : ""}
               </span>
+            </div>
+          </div>
+        </div>
+
+        {/* Shared destinations */}
+        {sharedDestinations.length > 0 && (
+          <div className="mb-3">
+            <p className="text-xs text-muted font-body mb-1.5 font-medium uppercase tracking-wide">Shared destinations</p>
+            <div className="flex flex-wrap gap-1.5">
+              {sharedDestinations.map((dest) => (
+                <span
+                  key={dest}
+                  className="text-xs font-body font-semibold px-2.5 py-1 rounded-full bg-rust/10 text-rust-dark border border-rust/20"
+                >
+                  {dest}
+                </span>
+              ))}
+            </div>
+          </div>
+        )}
+
+        {/* Their trips */}
+        <div className="mb-3">
+          <p className="text-xs text-muted font-body mb-1.5 font-medium uppercase tracking-wide">
+            {overlappingTrips.length} trip{overlappingTrips.length !== 1 ? "s" : ""} in your regions
+          </p>
+          <div className="flex flex-col gap-1.5">
+            {overlappingTrips.slice(0, 3).map((trip) => (
+              <Link
+                key={trip.id}
+                href={`/trips/${trip.id}`}
+                className="flex items-center justify-between bg-cream rounded-xl px-3 py-2 border border-sand-dark hover:border-rust/30 transition-colors"
+              >
+                <span className="text-xs font-body font-medium text-ink truncate">
+                  {trip.destination}
+                </span>
+                <span className="text-xs text-muted font-body flex-shrink-0 ml-2">
+                  {new Date(trip.start_date).toLocaleDateString("en-GB", { month: "short", year: "2-digit" })}
+                </span>
+              </Link>
+            ))}
+            {overlappingTrips.length > 3 && (
+              <p className="text-xs text-muted font-body px-1">
+                +{overlappingTrips.length - 3} more
+              </p>
             )}
           </div>
-          {profile.cohort && (
-            <p className="text-xs text-muted font-body mt-0.5">{profile.cohort}</p>
-          )}
-          <div className="flex items-center gap-1 mt-1">
-            <div className="w-2 h-2 rounded-full bg-rust/60" />
-            <p className="text-xs text-rust font-body font-medium">
-              {score} match point{score !== 1 ? "s" : ""}
-            </p>
-          </div>
         </div>
-      </div>
 
-      {/* Shared destinations */}
-      {sharedDestinations.length > 0 && (
-        <div className="mb-3">
-          <p className="text-xs text-muted font-body mb-1.5">Shared destinations</p>
+        {/* Travel styles */}
+        {travelStyles.length > 0 && (
           <div className="flex flex-wrap gap-1.5">
-            {sharedDestinations.map((dest) => (
-              <span
-                key={dest}
-                className="text-xs font-body font-medium px-2.5 py-1 rounded-full bg-rust/10 text-rust border border-rust/20"
-              >
-                {dest}
-              </span>
-            ))}
+            {travelStyles.slice(0, 5).map((style) => {
+              const colors = STYLE_COLORS[style.value];
+              return (
+                <span
+                  key={style.value}
+                  className={cn(
+                    "inline-flex items-center gap-1 text-xs px-2 py-1 rounded-full font-body font-medium",
+                    colors.bg,
+                    colors.text
+                  )}
+                >
+                  {style.emoji} {style.label}
+                </span>
+              );
+            })}
           </div>
-        </div>
-      )}
-
-      {/* Their trips in same region */}
-      <div className="mb-3">
-        <p className="text-xs text-muted font-body mb-1.5">
-          {overlappingTrips.length} trip{overlappingTrips.length !== 1 ? "s" : ""} in your regions
-        </p>
-        <div className="flex flex-col gap-1.5">
-          {overlappingTrips.slice(0, 3).map((trip) => (
-            <Link
-              key={trip.id}
-              href={`/trips/${trip.id}`}
-              className="flex items-center justify-between bg-cream rounded-xl px-3 py-2 border border-sand-dark hover:border-rust/30 transition-colors"
-            >
-              <span className="text-xs font-body font-medium text-ink truncate">
-                {trip.destination}
-              </span>
-              <span className="text-xs text-muted font-body flex-shrink-0 ml-2">
-                {new Date(trip.start_date).toLocaleDateString("en-GB", { month: "short", year: "2-digit" })}
-              </span>
-            </Link>
-          ))}
-          {overlappingTrips.length > 3 && (
-            <p className="text-xs text-muted font-body px-1">
-              +{overlappingTrips.length - 3} more
-            </p>
-          )}
-        </div>
+        )}
       </div>
-
-      {/* Travel styles */}
-      {travelStyles.length > 0 && (
-        <div className="flex flex-wrap gap-1.5">
-          {travelStyles.slice(0, 4).map((style) => (
-            <span
-              key={style.value}
-              className="inline-flex items-center gap-1 text-xs px-2 py-1 rounded-full bg-cream border border-sand-dark text-muted font-body"
-            >
-              {style.emoji}
-            </span>
-          ))}
-        </div>
-      )}
     </div>
   );
 }

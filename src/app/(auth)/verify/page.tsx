@@ -10,13 +10,13 @@ export default function VerifyPage() {
       </div>
 
       <div className="bg-ink-light rounded-3xl p-8 border border-white/5">
-        <div className="w-16 h-16 rounded-full bg-sage/20 flex items-center justify-center mx-auto mb-6">
+        <div className="w-16 h-16 rounded-full gradient-ocean flex items-center justify-center mx-auto mb-6 text-cream">
           <svg
             width="32"
             height="32"
             viewBox="0 0 24 24"
             fill="none"
-            stroke="#4A7C6F"
+            stroke="currentColor"
             strokeWidth="2"
             strokeLinecap="round"
             strokeLinejoin="round"
