@@ -69,7 +69,7 @@ export default function ProfileClient({ profile, trips, interestedTrips, email }
         {/* Profile card */}
         <div className="bg-sand rounded-3xl border border-sand-dark overflow-hidden">
           {/* Gradient banner */}
-          <div className="h-20 gradient-brand relative">
+          <div className="h-20 gradient-horizon relative">
             <div className="absolute bottom-0 right-0 p-3">
               <Link
                 href="/profile/edit"
@@ -244,7 +244,7 @@ function ProfileTripRow({ trip }: { trip: Trip }) {
             height="16"
             viewBox="0 0 24 24"
             fill="none"
-            stroke="#C8411B"
+            stroke="#E8572A"
             strokeWidth="2"
             strokeLinecap="round"
             strokeLinejoin="round"

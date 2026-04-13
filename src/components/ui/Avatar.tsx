@@ -17,7 +17,7 @@ export default function Avatar({ name, size = "md", className }: AvatarProps) {
   return (
     <div
       className={cn(
-        "rounded-full gradient-brand text-cream font-display font-semibold flex items-center justify-center flex-shrink-0",
+        "rounded-full gradient-horizon text-cream font-display font-semibold flex items-center justify-center flex-shrink-0",
         sizes[size],
         className
       )}

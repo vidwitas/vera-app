@@ -90,7 +90,7 @@ export default function EditProfileClient({ profile }: Props) {
       <div className="px-4 py-6 flex flex-col gap-6">
         {/* Avatar preview */}
         <div className="flex justify-center">
-          <div className="w-24 h-24 rounded-full gradient-brand flex items-center justify-center text-cream font-display text-3xl font-semibold shadow-md">
+          <div className="w-24 h-24 rounded-full gradient-horizon flex items-center justify-center text-cream font-display text-3xl font-semibold shadow-md">
             {fullName
               ? fullName.trim().split(" ").map((n) => n[0]).slice(0, 2).join("").toUpperCase()
               : "?"}

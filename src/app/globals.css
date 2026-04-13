@@ -12,12 +12,12 @@
 }
 
 html {
-  background-color: #F8F2E5;
+  background-color: #F7F2E8;
 }
 
 body {
-  color: #1C1410;
-  background-color: #F8F2E5;
+  color: #0F1923;
+  background-color: #F7F2E8;
   font-family: var(--font-dm-sans);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -53,20 +53,42 @@ body {
     padding-bottom: env(safe-area-inset-bottom, 1rem);
   }
 
-  .gradient-brand {
-    background: linear-gradient(135deg, #C8411B 0%, #C08010 100%);
+  /* ── Nomad Horizon gradients ──────────────────────────────── */
+
+  /* Sunset Orange → Amber  |  action, CTAs, card accents       */
+  .gradient-sunset {
+    background: linear-gradient(135deg, #E8572A 0%, #D4820A 100%);
   }
 
-  .gradient-brand-text {
-    background: linear-gradient(135deg, #C8411B 0%, #C08010 100%);
+  /* Deep Teal → Sky Blue   |  brand identity, avatars, banners */
+  .gradient-horizon {
+    background: linear-gradient(135deg, #0A6E6E 0%, #5BB5D8 100%);
+  }
+
+  /* Text variants */
+  .gradient-sunset-text {
+    background: linear-gradient(135deg, #E8572A 0%, #D4820A 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
   }
 
-  .gradient-ocean {
-    background: linear-gradient(135deg, #0E7A64 0%, #1E90C8 100%);
+  .gradient-horizon-text {
+    background: linear-gradient(135deg, #0A6E6E 0%, #5BB5D8 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
   }
+
+  /* Legacy aliases — keeps old class names working during migration */
+  .gradient-brand    { background: linear-gradient(135deg, #E8572A 0%, #D4820A 100%); }
+  .gradient-brand-text {
+    background: linear-gradient(135deg, #0A6E6E 0%, #5BB5D8 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  .gradient-ocean    { background: linear-gradient(135deg, #0A6E6E 0%, #5BB5D8 100%); }
 }
 
 /* Scrollbar */
@@ -77,6 +99,6 @@ body {
   background: transparent;
 }
 ::-webkit-scrollbar-thumb {
-  background: #DED0B4;
+  background: #D9C49A;
   border-radius: 2px;
 }

@@ -9,24 +9,26 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        ink: "#1C1410",
-        rust: "#C8411B",
-        sage: "#0E7A64",
-        sand: "#EDE3CE",
-        cream: "#F8F2E5",
-        gold: "#C08010",
-        sky: "#1E90C8",
-        "ink-light": "#2E201A",
-        "rust-light": "#E05A34",
-        "rust-dark": "#9E3214",
-        "sage-light": "#14A085",
-        "sage-dark": "#0A5547",
-        "sand-dark": "#DED0B4",
+        // ── Nomad Horizon palette ─────────────────────────────
+        ink: "#0F1923",          // Deep navy — expedition logbook
+        rust: "#E8572A",         // Sunset Orange — adventure / action
+        sage: "#0A6E6E",         // Deep Teal — brand / reliability
+        sand: "#EDD9B4",         // Sand Beige — organic warmth
+        cream: "#F7F2E8",        // Parchment — page background
+        gold: "#D4820A",         // Warm Amber — supporting accent
+        sky: "#5BB5D8",          // Sky Blue — open / horizon
+        // ── Variants ──────────────────────────────────────────
+        "ink-light": "#1E2D3D",
+        "rust-light": "#F07244",
+        "rust-dark": "#C04018",
+        "sage-light": "#14A0A0",
+        "sage-dark": "#075555",
+        "sand-dark": "#D9C49A",
         "gold-light": "#F5E8BE",
-        "gold-dark": "#8A5C08",
+        "gold-dark": "#A06008",
         "sky-light": "#C0E4F8",
-        "sky-dark": "#1468A0",
-        muted: "#7A6B58",
+        "sky-dark": "#2890B8",
+        muted: "#6B7B8D",        // Blue-gray slate — supporting text
       },
       fontFamily: {
         display: ["var(--font-playfair)", "Georgia", "serif"],
