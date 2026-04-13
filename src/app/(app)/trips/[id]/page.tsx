@@ -1,5 +1,6 @@
 import { notFound } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
+import { fetchDestinationImage } from "@/lib/unsplash";
 import TripDetailClient from "./TripDetailClient";
 
 interface Props {
@@ -14,7 +15,6 @@ export default async function TripDetailPage({ params }: Props) {
     data: { user },
   } = await supabase.auth.getUser();
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const { data: tripData } = await supabase
     .from("trips")
     .select(
@@ -36,6 +36,9 @@ export default async function TripDetailPage({ params }: Props) {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const travelers = trip.trip_interests?.map((i: any) => i.profile) ?? [];
 
+  // Fetch destination photo (returns null if key not set — graceful fallback)
+  const heroImage = await fetchDestinationImage(trip.destination, trip.country);
+
   return (
     <TripDetailClient
       trip={trip}
@@ -43,6 +46,7 @@ export default async function TripDetailPage({ params }: Props) {
       currentUserId={user?.id ?? ""}
       initialInterest={userInterest ?? false}
       isOwner={trip.user_id === user?.id}
+      heroImage={heroImage}
     />
   );
 }
