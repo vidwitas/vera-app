@@ -66,8 +66,13 @@ export default function BottomNav() {
                 active ? "text-rust" : "text-muted hover:text-ink"
               )}
             >
-              {icon(active)}
-              <span className={cn("text-[10px] font-body font-medium tracking-wide", active ? "text-rust" : "text-muted")}>
+              <span className={cn(
+                "p-1.5 rounded-xl transition-all",
+                active ? "gradient-brand text-cream" : ""
+              )}>
+                {icon(active)}
+              </span>
+              <span className={cn("text-[10px] font-body font-medium tracking-wide", active ? "text-rust font-semibold" : "text-muted")}>
                 {label}
               </span>
             </Link>

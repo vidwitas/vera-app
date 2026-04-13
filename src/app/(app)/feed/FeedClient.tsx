@@ -37,12 +37,12 @@ export default function FeedClient({ initialTrips }: FeedClientProps) {
       <header className="sticky top-0 z-40 bg-cream/95 backdrop-blur-sm border-b border-sand-dark">
         <div className="px-4 pt-12 pb-3">
           <div className="flex items-center justify-between mb-3">
-            <h1 className="font-display text-2xl font-semibold text-ink">
+            <h1 className="font-display text-2xl font-semibold gradient-brand-text">
               Explore trips
             </h1>
             <Link
               href="/trips/new"
-              className="flex items-center gap-1.5 text-sm font-body font-medium text-rust hover:text-rust-dark transition-colors"
+              className="flex items-center gap-1.5 text-sm font-body font-semibold text-rust hover:text-rust-dark transition-colors"
             >
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
                 <path d="M12 5v14M5 12h14" />
@@ -82,7 +82,7 @@ export default function FeedClient({ initialTrips }: FeedClientProps) {
               onClick={() => setRegionFilter(null)}
               className={`flex-shrink-0 text-xs px-3 py-1.5 rounded-full font-body font-medium transition-all border ${
                 regionFilter === null && styleFilter === null
-                  ? "bg-ink text-cream border-ink"
+                  ? "gradient-brand text-cream border-transparent"
                   : "bg-sand border-sand-dark text-muted hover:text-ink"
               }`}
             >
@@ -96,7 +96,7 @@ export default function FeedClient({ initialTrips }: FeedClientProps) {
                 }
                 className={`flex-shrink-0 text-xs px-3 py-1.5 rounded-full font-body font-medium transition-all border ${
                   regionFilter === value
-                    ? "bg-sage text-cream border-sage"
+                    ? "gradient-ocean text-cream border-transparent"
                     : "bg-sand border-sand-dark text-muted hover:text-ink"
                 }`}
               >
@@ -115,7 +115,7 @@ export default function FeedClient({ initialTrips }: FeedClientProps) {
                 }
                 className={`flex-shrink-0 inline-flex items-center gap-1 text-xs px-3 py-1 rounded-full font-body font-medium transition-all border ${
                   styleFilter === value
-                    ? "bg-rust text-cream border-rust"
+                    ? "gradient-brand text-cream border-transparent"
                     : "bg-sand border-sand-dark text-muted hover:text-ink"
                 }`}
               >
@@ -146,7 +146,7 @@ export default function FeedClient({ initialTrips }: FeedClientProps) {
             </p>
             <Link
               href="/trips/new"
-              className="inline-flex items-center gap-2 bg-rust text-cream text-sm font-body font-medium px-5 py-2.5 rounded-2xl hover:bg-rust-dark transition-colors"
+              className="inline-flex items-center gap-2 gradient-brand text-cream text-sm font-body font-semibold px-5 py-2.5 rounded-2xl hover:opacity-90 transition-opacity"
             >
               Post a trip
             </Link>
